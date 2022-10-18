@@ -104,6 +104,9 @@ static const riscv_implied_info_t riscv_implied_info[] =
   {"zvl16384b", "zvl8192b"},
   {"zvl32768b", "zvl16384b"},
   {"zvl65536b", "zvl32768b"},
+  {"p", "zbpbo"},
+  {"p", "zpn"},
+  {"p", "zpsf"},
 
   {NULL, NULL}
 };
@@ -205,6 +208,11 @@ static const struct riscv_ext_version riscv_ext_version_table[] =
   {"zvl16384b", ISA_SPEC_CLASS_NONE, 1, 0},
   {"zvl32768b", ISA_SPEC_CLASS_NONE, 1, 0},
   {"zvl65536b", ISA_SPEC_CLASS_NONE, 1, 0},
+  
+  {"p", ISA_SPEC_CLASS_DRAFT, 2, 0},
+  {"zpn", ISA_SPEC_CLASS_DRAFT, 2, 0},
+  {"zpsf", ISA_SPEC_CLASS_DRAFT, 2, 0},
+  {"zbpbo", ISA_SPEC_CLASS_DRAFT, 2, 0},
 
   /* Terminate the list.  */
   {NULL, ISA_SPEC_CLASS_NONE, 0, 0}
@@ -1164,6 +1172,10 @@ static const riscv_ext_flag_table_t riscv_ext_flag_table[] =
   {"zvl16384b", &gcc_options::x_riscv_zvl_flags, MASK_ZVL16384B},
   {"zvl32768b", &gcc_options::x_riscv_zvl_flags, MASK_ZVL32768B},
   {"zvl65536b", &gcc_options::x_riscv_zvl_flags, MASK_ZVL65536B},
+
+  {"zbpbo", &gcc_options::x_riscv_rvp_subext, MASK_ZBPBO},
+  {"zpn",  &gcc_options::x_riscv_rvp_subext, MASK_ZPN},
+  {"zpsf", &gcc_options::x_riscv_rvp_subext, MASK_ZPSF},
 
 
   {NULL, NULL, 0}

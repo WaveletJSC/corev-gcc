@@ -44,7 +44,8 @@ enum riscv_isa_spec_class {
 
   ISA_SPEC_CLASS_2P2,
   ISA_SPEC_CLASS_20190608,
-  ISA_SPEC_CLASS_20191213
+  ISA_SPEC_CLASS_20191213,
+  ISA_SPEC_CLASS_DRAFT
 };
 
 extern enum riscv_isa_spec_class riscv_isa_spec;
@@ -160,6 +161,15 @@ enum stack_protector_guard {
 #define TARGET_ZVL16384B ((riscv_zvl_flags & MASK_ZVL16384B) != 0)
 #define TARGET_ZVL32768B ((riscv_zvl_flags & MASK_ZVL32768B) != 0)
 #define TARGET_ZVL65536B ((riscv_zvl_flags & MASK_ZVL65536B) != 0)
+
+/* P extension subset */
+#define MASK_ZPN (1 << 0)
+#define MASK_ZBPBO (1 << 1)
+#define MASK_ZPSF (1 << 2)
+
+#define TARGET_ZPN ((riscv_rvp_subext & MASK_ZPN) != 0)
+#define TARGET_ZBPBO ((riscv_rvp_subext & MASK_ZBPBO) != 0)
+#define TARGET_ZPSF ((riscv_rvp_subext & MASK_ZPSF) != 0)
 
 /* Bit of riscv_zvl_flags will set contintuly, N-1 bit will set if N-bit is
    set, e.g. MASK_ZVL64B has set then MASK_ZVL32B is set, so we can use

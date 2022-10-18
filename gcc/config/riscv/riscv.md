@@ -45,6 +45,17 @@
 
   ;; Stack tie
   UNSPEC_TIE
+
+  ;; rvp
+  UNSPEC_KABS
+  UNSPEC_KADDW
+  UNSPEC_KSUBW
+  UNSPEC_KADDH
+  UNSPEC_KSUBH
+  UNSPEC_UKADDW
+  UNSPEC_UKSUBW
+  UNSPEC_UKADDH
+  UNSPEC_UKSUBH
 ])
 
 (define_c_enum "unspecv" [
@@ -126,7 +137,7 @@
   (const_string "unknown"))
 
 ;; Main data type used by the insn
-(define_attr "mode" "unknown,none,QI,HI,SI,DI,TI,SF,DF,TF"
+(define_attr "mode" "unknown,none,QI,HI,SI,DI,TI,SF,DF,TF,V2HI,V4HI,V8HI,V4QI,V8QI,V2SI,V4SI"
   (const_string "unknown"))
 
 ;; True if the main data type is twice the size of a word.
@@ -171,10 +182,14 @@
 ;; nop		no operation
 ;; ghost	an instruction that produces no real code
 ;; bitmanip	bit manipulation instructions
+;; simd   simd instruction for p extension
+;; dsp    instructions for increasing the DSP processing capabilities
+;; dsp64  as the same as dsp, but RV64P only
 (define_attr "type"
   "unknown,branch,jump,call,load,fpload,store,fpstore,
    mtc,mfc,const,arith,logical,shift,slt,imul,idiv,move,fmove,fadd,fmul,
-   fmadd,fdiv,fcmp,fcvt,fsqrt,multi,auipc,sfb_alu,nop,ghost,bitmanip,rotate"
+   fmadd,fdiv,fcmp,fcvt,fsqrt,multi,auipc,sfb_alu,nop,ghost,bitmanip,rotate,
+   simd,dsp,dsp64"
   (cond [(eq_attr "got" "load") (const_string "load")
 
 	 ;; If a doubleword move uses these expensive instructions,
@@ -2768,6 +2783,8 @@
   ""
   [(set_attr "length" "0")]
 )
+
+(include "rvp.md")
 
 ;; This fixes a failure with gcc.c-torture/execute/pr64242.c at -O2 for a
 ;; 32-bit target when using -mtune=sifive-7-series.  The first sched pass
